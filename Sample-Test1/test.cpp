@@ -107,3 +107,20 @@ TEST_F(DeviceFixture, ReadDeviceDriverException) {
 
 	EXPECT_THROW(dd.read(READ_ADDRESS), ReadFailException);
 }
+
+TEST_F(DeviceFixture, WriteDeviceDriver) {
+	setNormalWriteDevice();
+
+	DeviceDriver dd{ &normal_device };
+	dd.write(WRITE_ADDRESS, VALID_VALUE_READ);
+
+	EXPECT_EQ(VALID_VALUE_READ, dd.read(WRITE_ADDRESS));
+}
+
+TEST_F(DeviceFixture, WriteDeviceDriverException) {
+	setAbnormalWriteDevice();
+
+	DeviceDriver dd{ &abnormal_device };
+	
+	EXPECT_THROW(dd.write(WRITE_ADDRESS, VALID_VALUE_READ), WriteFailException);
+}

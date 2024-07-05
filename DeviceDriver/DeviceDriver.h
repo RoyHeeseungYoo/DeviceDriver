@@ -14,6 +14,8 @@ protected:
 
 private:
     const int READ_TRIAL = 5;
+    const int VALUE_EMPTY = 0xFF;
 };
 
 class ReadFailException : public std::exception {};
+class WriteFailException : public std::exception {};
