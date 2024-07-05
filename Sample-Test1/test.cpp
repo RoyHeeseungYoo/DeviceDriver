@@ -91,3 +91,19 @@ TEST_F(DeviceFixture, WriteAbnormal) {
 	EXPECT_NE(EMPTY_VALUE, abnormal_device.read(WRITE_ADDRESS));
 	EXPECT_NE(VALID_VALUE_READ, abnormal_device.read(WRITE_ADDRESS));
 }
+
+TEST_F(DeviceFixture, ReadDeviceDriver) {
+	setNormalReadDevice();
+	
+	DeviceDriver dd{ &normal_device };
+
+	EXPECT_EQ(VALID_VALUE_READ, dd.read(READ_ADDRESS));
+}
+
+TEST_F(DeviceFixture, ReadDeviceDriverException) {
+	setAbnormalReadDevice();
+	
+	DeviceDriver dd{ &abnormal_device };
+
+	EXPECT_THROW(dd.read(READ_ADDRESS), ReadFailException);
+}
